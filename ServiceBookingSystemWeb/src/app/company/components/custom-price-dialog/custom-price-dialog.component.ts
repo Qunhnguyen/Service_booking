@@ -1,0 +1,40 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+@Component({
+  selector: 'app-custom-price-dialog',
+  templateUrl: './custom-price-dialog.component.html',
+  styleUrls: ['./custom-price-dialog.component.scss']
+})
+export class CustomPriceDialogComponent implements OnInit {
+  priceForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<CustomPriceDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.priceForm = this.fb.group({
+      price: ['', [Validators.required, Validators.min(0)]]
+    });
+  }
+
+  ngOnInit(): void {
+    if (this.data.currentPrice) {
+      this.priceForm.patchValue({
+        price: this.data.currentPrice
+      });
+    }
+  }
+
+  onSubmit(): void {
+    if (this.priceForm.valid) {
+      this.dialogRef.close(this.priceForm.value.price);
+    }
+  }
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
+} 

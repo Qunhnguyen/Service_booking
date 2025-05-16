@@ -1,0 +1,65 @@
+<div class="page-container">
+    <!-- Header Section -->
+    <div class="header-section">
+        <div class="header-content">
+            <h1>Quản lý dịch vụ</h1>
+            <p>Danh sách dịch vụ của bạn</p>
+        </div>
+        <div class="header-action">
+            <button mat-raised-button color="primary" [routerLink]="['/company/create-ad']" class="add-button">
+                <mat-icon>add_circle</mat-icon>
+                Thêm dịch vụ mới
+            </button>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="ads.length === 0">
+        <mat-card class="empty-card">
+            <mat-card-content>
+                <div class="empty-content">
+                    <div class="empty-icon-wrapper">
+                        <mat-icon class="empty-icon">add_business</mat-icon>
+                    </div>
+                    <h2>Chưa có dịch vụ nào</h2>
+                    <p>Hãy thêm dịch vụ mới để bắt đầu kinh doanh của bạn</p>
+                    <button mat-raised-button color="primary" [routerLink]="['/company/create-ad']" class="create-button">
+                        <mat-icon>add_circle</mat-icon>
+                        Thêm dịch vụ mới
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="services-grid" *ngIf="ads.length > 0">
+        <mat-card class="service-card" *ngFor="let ad of ads">
+            <div class="card-content">
+                <div class="service-image">
+                    <img [src]="updateImg(ad.returnedImg)" [alt]="ad.serviceName">
+                    <div class="image-overlay"></div>
+                </div>
+                <mat-card-content>
+                    <h2 class="service-title">{{ad.serviceName}}</h2>
+                    <p class="service-description">{{ad.description}}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <a mat-raised-button color="primary" [routerLink]="['/company/update', ad.id]" class="action-button">
+                        <mat-icon>edit</mat-icon>
+                        Cập nhật
+                    </a>
+                    <button mat-raised-button color="warn" (click)="deleteAd(ad.id)" [disabled]="isLoading" class="action-button">
+                        <mat-icon>delete</mat-icon>
+                        Xóa
+                    </button>
+                </mat-card-actions>
+            </div>
+        </mat-card>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-overlay" *ngIf="isLoading">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+</div>

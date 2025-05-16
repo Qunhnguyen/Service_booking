@@ -1,0 +1,130 @@
+<div *ngIf="isClientLoggedIn">
+  <nz-header class="main-header" nz-row nzType="flex">
+    <div class="header-left">
+      <img src="assets/logo.png" alt="Logo" class="logo">
+      <h2 class="skillSync">Anh quan Service</h2>
+    </div>
+    <div class="nav-links">
+      <a nz-button nzType="link" routerLink="/client/dashboard" routerLinkActive="active">
+        <i nz-icon nzType="home"></i> Trang chủ
+      </a>
+      <a nz-button nzType="link" routerLink="/client/services" routerLinkActive="active">
+        <i nz-icon nzType="appstore"></i> Dịch vụ
+      </a>
+      <a nz-button nzType="link" routerLink="/client/bookings" routerLinkActive="active">
+        <i nz-icon nzType="calendar"></i> Thuê dịch vụ
+      </a>
+      <a nz-button nzType="link" (click)="logout()" routerLinkActive="active">
+        <i nz-icon nzType="logout"></i> Đăng xuất
+      </a>
+    </div>
+  </nz-header>
+  <nz-sider nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0" class="mobile-sidebar">
+    <ul class="nav-links" nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-menu-item>
+        <a nz-button nzType="link" routerLink="/client/dashboard" routerLinkActive="active">Trang chủ</a>
+      </li>
+      <li nz-menu-item>
+        <a nz-button nzType="link" routerLink="/client/services" routerLinkActive="active">Dịch vụ</a>
+      </li>
+      <li nz-menu-item>
+        <a nz-button nzType="link" routerLink="/client/bookings" routerLinkActive="active">Thuê dịch vụ</a>
+      </li>
+      <li nz-menu-item>
+        <a nz-button nzType="link" (click)="logout()"  routerLinkActive="active">Đăng xuất</a>
+      </li>
+    </ul>
+  </nz-sider>
+  <app-chatbot></app-chatbot>
+
+</div>
+
+<div *ngIf="isCompanyLoggedIn">
+  <nz-header class="main-header" nz-row nzType="flex">
+    <div class="header-left">
+      <img src="assets/logo.png" alt="Logo" class="logo">
+      <h2 class="skillSync">Anh quan Service</h2>
+    </div>
+    <div class="nav-links">
+      <a nz-button nzType="link" routerLink="/company/dashboard" routerLinkActive="active">
+        <i nz-icon nzType="home"></i> Trang chủ
+      </a>
+      <a nz-button nzType="link" routerLink="/company/ad" routerLinkActive="active">
+        <i nz-icon nzType="plus-circle"></i> Post Ad
+      </a>
+      <a nz-button nzType="link" routerLink="/company/ads" routerLinkActive="active">
+        <i nz-icon nzType="file-text"></i> Ads
+      </a>
+      <a nz-button nzType="link" (click)="logout()" routerLinkActive="active">
+        <i nz-icon nzType="logout"></i> Đăng xuất
+      </a>
+    </div>
+  </nz-header>
+  <nz-sider nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0" class="mobile-sidebar">
+    <ul class="nav-links" nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-menu-item>
+        <a nz-button nzType="link" routerLink="/company/dashboard" routerLinkActive="active">Trang chủ</a>
+      </li>
+      <li nz-menu-item>
+        <a nz-button nzType="link" routerLink="/company/ad" routerLinkActive="active">Post Ad</a>
+      </li>
+      <li nz-menu-item>
+        <a nz-button nzType="link" routerLink="/company/ads" routerLinkActive="active">Ads</a>
+      </li>
+      <li nz-menu-item>
+        <a nz-button nzType="link" (click)="logout()"  routerLinkActive="active">Đăng xuất</a>
+      </li>
+    </ul>
+  </nz-sider>
+</div>
+
+<router-outlet></router-outlet>
+
+<footer class="main-footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>Về chúng tôi</h3>
+      <p>Anh quan Service - Nền tảng kết nối dịch vụ chất lượng</p>
+      <div class="footer-features">
+        <div class="feature">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Dịch vụ đa dạng</span>
+        </div>
+        <div class="feature">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Đội ngũ chuyên nghiệp</span>
+        </div>
+        <div class="feature">
+          <i nz-icon nzType="check-circle"></i>
+          <span>Hỗ trợ 24/7</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-section">
+      <h3>Liên hệ</h3>
+      <p><i nz-icon nzType="phone"></i> 0123 456 789</p>
+      <p><i nz-icon nzType="mail"></i> contact@anhquanservice.com</p>
+      <p><i nz-icon nzType="environment"></i> 123 Đường ABC, Quận XYZ, TP.HCM</p>
+    </div>
+    <div class="footer-section">
+      <h3>Theo dõi chúng tôi</h3>
+      <div class="social-links">
+        <a href="https://www.facebook.com" target="_blank" class="social-icon">
+          <i nz-icon nzType="facebook"></i>
+          <span>Facebook</span>
+        </a>
+        <a href="https://www.twitter.com" target="_blank" class="social-icon">
+          <i nz-icon nzType="twitter"></i>
+          <span>Twitter</span>
+        </a>
+        <a href="https://www.linkedin.com" target="_blank" class="social-icon">
+          <i nz-icon nzType="linkedin"></i>
+          <span>LinkedIn</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Anh quan Service. All rights reserved.</p>
+  </div>
+</footer>

@@ -1,0 +1,62 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <div class="login-content">
+      <div class="login-header">
+        <div class="logo-container">
+          <span class="logo">⚙️</span>
+          <h1>AnhQuânService</h1>
+        </div>
+        <p class="welcome-text">Chào mừng trở lại! Vui lòng đăng nhập để tiếp tục.</p>
+      </div>
+
+      <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Vui lòng nhập email của bạn">
+            <nz-input-group nzPrefixIcon="mail">
+              <input
+                type="email"
+                nz-input
+                placeholder="Email của bạn"
+                formControlName="userName"
+                id="email"
+                class="input-field"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Vui lòng nhập mật khẩu">
+            <nz-input-group nzPrefixIcon="lock">
+              <input
+                nz-input
+                type="password"
+                placeholder="Mật khẩu"
+                formControlName="password"
+                id="password"
+                class="input-field"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <div class="form-actions">
+          <button nz-button class="login-btn" [nzType]="'primary'">
+            <i nz-icon nzType="login"></i>
+            Đăng nhập
+          </button>
+          
+          <div class="additional-actions">
+          </div>
+        </div>
+      </form>
+
+      <div class="register-section">
+        <span>Chưa có tài khoản? </span>
+        <a routerLink="/register" class="register-link">
+          Đăng ký ngay
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

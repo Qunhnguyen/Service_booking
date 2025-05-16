@@ -1,0 +1,243 @@
+// Variables
+$primary-color: #1a237e;
+$secondary-color: #2196f3;
+$accent-color: #9B4DFF;
+$container-bg: rgba(255, 255, 255, 0.95);
+$text-primary: #333;
+$text-secondary: #666;
+$error-color: #ff4d4f;
+$success-color: #52c41a;
+$transition-speed: 0.3s;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin glass-effect {
+  background: $container-bg;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+// Main Styles
+.wrapper {
+  @include flex-center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+  padding: 20px;
+}
+
+.container {
+  @include flex-center;
+  width: 100%;
+  max-width: 480px;
+}
+
+.content-box {
+  @include glass-effect;
+  width: 100%;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+// Logo Styles
+.logo-container {
+  position: relative;
+  @include flex-center;
+  margin-bottom: 24px;
+}
+
+.logo {
+  font-size: 3rem;
+  color: $primary-color;
+  z-index: 2;
+}
+
+.logo-ring {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 3px solid rgba(26, 35, 126, 0.2);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+// Header Styles
+.header {
+  margin-bottom: 32px;
+  
+  h1 {
+    color: $primary-color;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  
+  p {
+    color: $text-secondary;
+    font-size: 1.1rem;
+  }
+}
+
+// Form Styles
+.signup-form {
+  text-align: left;
+
+  nz-form-item {
+    margin-bottom: 24px;
+  }
+
+  nz-input-group {
+    border-radius: 8px;
+    
+    input {
+      padding: 8px 12px;
+      height: 42px;
+      font-size: 1rem;
+    }
+
+    .ant-input-prefix {
+      color: $text-secondary;
+      font-size: 18px;
+      margin-right: 8px;
+    }
+  }
+}
+
+// Name Fields Group
+.name-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+// Submit Button
+.submit-btn {
+  width: 100%;
+  height: 44px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, $secondary-color 0%, $primary-color 100%);
+  border: none;
+  border-radius: 8px;
+  margin-top: 8px;
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, darken($secondary-color, 5%) 0%, darken($primary-color, 5%) 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .anticon {
+    margin-right: 8px;
+  }
+}
+
+// Footer Styles
+.footer {
+  margin-top: 32px;
+  color: $text-secondary;
+  
+  a {
+    color: $accent-color;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color $transition-speed ease;
+    
+    &:hover {
+      color: darken($accent-color, 10%);
+      text-decoration: underline;
+    }
+  }
+}
+
+// Error Messages
+:host ::ng-deep {
+  .ant-form-item-explain-error {
+    color: $error-color;
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+
+  .ant-input-status-error:not(.ant-input-disabled) {
+    border-color: $error-color;
+  }
+
+  .ant-form-item-has-success {
+    .ant-input {
+      border-color: $success-color;
+    }
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+}
+
+// Responsive Styles
+@media (max-width: 768px) {
+  .content-box {
+    padding: 30px;
+  }
+  
+  .header {
+    h1 {
+      font-size: 1.8rem;
+    }
+    
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .name-group {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-box {
+    padding: 24px;
+  }
+  
+  .header {
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .signup-form {
+    nz-input-group {
+      input {
+        height: 40px;
+        font-size: 0.95rem;
+      }
+    }
+  }
+
+  .submit-btn {
+    height: 42px;
+    font-size: 0.95rem;
+  }
+}

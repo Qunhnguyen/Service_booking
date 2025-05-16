@@ -1,0 +1,112 @@
+<div class="wrapper">
+  <div class="container card-shadow">
+    <h1 class="header">
+      <i class="header-icon fas fa-edit"></i>
+      Cập nhật dịch vụ
+    </h1>
+    <form [formGroup]="validateForm" (ngSubmit)="updateAd()">
+      <div class="form-row image-row">
+        <div class="profile-badge">
+          <label class="upload-label">
+            <input 
+              type="file" 
+              accept="image/x-png,image/gif,image/jpeg" 
+              (change)="onFileSelected($event)" 
+              [disabled]="isLoading"
+              hidden
+            />
+            <span class="upload-btn">
+              <i class="fas fa-camera camera-icon"></i> Chọn ảnh
+            </span>
+          </label>
+          <div *ngIf="imagePreview || existingImage" class="image-preview">
+            <div class="circle-image">
+              <img [src]="imagePreview || existingImage" [alt]="'Preview Image'" class="preview-image"/>
+              <div class="image-overlay" *ngIf="!isLoading">
+                <i class="fas fa-edit"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-card">
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-tasks"></i>
+            Tên dịch vụ
+          </label>
+          <input 
+            type="text"
+            class="form-control"
+            formControlName="serviceName" 
+            placeholder="Nhập tên dịch vụ"
+            [disabled]="isLoading"
+          >
+          <div class="error-message" *ngIf="validateForm.get('serviceName')?.hasError('required')">
+            Vui lòng nhập tên dịch vụ
+          </div>
+        </div>
+      </div>
+
+      <div class="input-card">
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-money-bill-wave"></i>
+            Giá
+          </label>
+          <div class="input-with-suffix">
+            <input 
+              type="number"
+              class="form-control"
+              formControlName="price" 
+              placeholder="Nhập giá"
+              [disabled]="isLoading"
+            >
+            <span class="input-suffix">VNĐ</span>
+          </div>
+          <div class="error-message" *ngIf="validateForm.get('price')?.hasError('required')">
+            Vui lòng nhập giá
+          </div>
+          <div class="error-message" *ngIf="validateForm.get('price')?.hasError('min')">
+            Giá phải lớn hơn 0
+          </div>
+        </div>
+      </div>
+
+      <div class="input-card">
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-align-left"></i>
+            Mô tả
+          </label>
+          <textarea 
+            class="form-control"
+            rows="5"
+            formControlName="description" 
+            placeholder="Nhập mô tả"
+            [disabled]="isLoading"
+          ></textarea>
+          <div class="error-message" *ngIf="validateForm.get('description')?.hasError('required')">
+            Vui lòng nhập mô tả
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <div class="loading-container" *ngIf="isLoading">
+          <div class="spinner"></div>
+          <p>Đang xử lý...</p>
+        </div>
+        <button 
+          class="btn primary-btn" 
+          type="submit"
+          [disabled]="validateForm.invalid || isLoading"
+        >
+          <i class="fas fa-save"></i>
+          Cập nhật
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

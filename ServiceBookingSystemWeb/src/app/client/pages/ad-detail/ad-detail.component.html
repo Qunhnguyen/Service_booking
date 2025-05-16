@@ -1,0 +1,169 @@
+<div class="ad-detail-wrapper" *ngIf="ad">
+  <div class="ad-detail-container">
+    <!-- Service Information Section -->
+    <section class="service-info">
+      <div class="service-header">
+        <div class="company-info">
+          <img [src]="avatarUrl" alt="Company Logo" class="company-logo">
+          <span class="company-name">{{ ad.companyName }}</span>
+        </div>
+        <h1 class="service-title">{{ ad.serviceName }}</h1>
+      </div>
+
+      <div class="service-content">
+        <div class="service-image">
+          <img [src]="updateImg(ad.returnedImg)" [alt]="ad.serviceName" class="main-image">
+        </div>
+
+        <div class="service-details">
+          <div class="price-tag">
+            <i nz-icon nzType="dollar"></i>
+            <span class="price">{{ ad.price | number }} VND / ngày</span>
+          </div>
+
+          <div class="description">
+            <h3>Mô tả dịch vụ</h3>
+            <p>{{ ad.description }}</p>
+          </div>
+
+          <div class="service-features">
+            <div class="feature">
+              <i nz-icon nzType="check-circle"></i>
+              <span>Dịch vụ chất lượng cao</span>
+            </div>
+            <div class="feature">
+              <i nz-icon nzType="check-circle"></i>
+              <span>Đội ngũ chuyên nghiệp</span>
+            </div>
+            <div class="feature">
+              <i nz-icon nzType="check-circle"></i>
+              <span>Hỗ trợ 24/7</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking-section">
+      <div class="booking-container">
+        <h2 class="booking-title">Đặt lịch dịch vụ</h2>
+        <p class="booking-subtitle">Vui lòng chọn ngày và thời gian phù hợp với bạn</p>
+
+        <form nz-form [formGroup]="validateForm" class="booking-form">
+          <div class="form-group">
+            <label for="startDate">
+              <i nz-icon nzType="calendar"></i>
+              Ngày bắt đầu
+            </label>
+            <nz-date-picker
+              formControlName="startDate"
+              name="startDate"
+              id="startDate"
+              [nzShowTime]="true"
+              nzFormat="dd/MM/yyyy HH:mm"
+              class="date-picker"
+              (ngModelChange)="calculateTotalPrice()"
+            ></nz-date-picker>
+          </div>
+
+          <div class="form-group">
+            <label for="endDate">
+              <i nz-icon nzType="calendar"></i>
+              Ngày kết thúc
+            </label>
+            <nz-date-picker
+              formControlName="endDate"
+              name="endDate"
+              id="endDate"
+              [nzShowTime]="true"
+              nzFormat="dd/MM/yyyy HH:mm"
+              class="date-picker"
+              (ngModelChange)="calculateTotalPrice()"
+            ></nz-date-picker>
+          </div>
+
+          <div class="form-group total-price" *ngIf="totalPrice > 0">
+            <label>
+              <i nz-icon nzType="calculator"></i>
+              Chi tiết thanh toán
+            </label>
+            <div class="price-details">
+              <div class="price-row">
+                <span>Giá dịch vụ:</span>
+                <span>{{ ad.price | number }} VND/ngày</span>
+              </div>
+              <div class="price-row">
+                <span>Số ngày:</span>
+                <span>{{ getDaysDifference() }} ngày</span>
+              </div>
+              <div class="price-row total">
+                <span>Tổng tiền:</span>
+                <span class="total-amount">{{ totalPrice | number }} VND</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">
+              <i nz-icon nzType="message"></i>
+              Địa chỉ
+            </label>
+            <textarea
+              rows="4"
+              nz-input
+              placeholder="Thêm địa chỉ và chi tiết liên hệ của bạn"
+              formControlName="message"
+              name="message"
+              id="message"
+              class="message-input"
+            ></textarea>
+          </div>
+
+          <button
+            nz-button
+            nzType="primary"
+            nzSize="large"
+            [disabled]="validateForm.invalid"
+            (click)="bookService()"
+            class="book-button"
+          >
+            <i nz-icon nzType="check-circle"></i>
+            Đặt lịch ngay
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section" *ngIf="reviews && reviews.length > 0">
+      <div class="reviews-header">
+        <h2 class="reviews-title">Đánh giá từ khách hàng</h2>
+        <div class="average-rating">
+          <nz-rate disabled [ngModel]="getAverageRating()"></nz-rate>
+          <span class="rating-text">{{ getAverageRating() }}/5</span>
+        </div>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-card" *ngFor="let review of reviews">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <img [src]="review.clientAvatar || 'assets/default-avatar.png'" alt="Reviewer" class="reviewer-avatar">
+              <div class="reviewer-details">
+                <h4 class="reviewer-name">{{ review.clientName }}</h4>
+                <span class="review-date">{{ review.reviewDate | date:'dd/MM/yyyy' }}</span>
+              </div>
+            </div>
+            <div class="review-rating">
+              <nz-rate disabled [ngModel]="review.rating"></nz-rate>
+            </div>
+          </div>
+          <div class="review-content">
+            <p>{{ review.review }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

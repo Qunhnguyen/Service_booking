@@ -1,0 +1,57 @@
+<div class="company-container">
+  <div class="sidebar" [class.collapsed]="isCollapsed">
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo" class="logo-img">
+      <h2 class="company-name">{{ companyName }}</h2>
+    </div>
+    <ul class="menu">
+      <li class="menu-item" routerLink="/company/dashboard" routerLinkActive="active">
+        <i class="icon dashboard-icon"></i>
+        <span>Dashboard</span>
+      </li>
+      <li class="menu-item" routerLink="/company/ad" routerLinkActive="active">
+        <i class="icon plus-icon"></i>
+        <span>Tạo Quảng Cáo</span>
+      </li>
+      <li class="menu-item" routerLink="/company/ads" routerLinkActive="active">
+        <i class="icon file-icon"></i>
+        <span>Quản Lý Quảng Cáo</span>
+      </li>
+      <li class="menu-item" (click)="logout()">
+        <i class="icon logout-icon"></i>
+        <span>Đăng Xuất</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header class="header">
+      <div class="header-content">
+        <div class="header-left">
+          <button class="menu-toggle" (click)="toggleSidebar()">
+            <i class="icon menu-icon"></i>
+          </button>
+        </div>
+        <div class="header-right">
+          <div class="profile-dropdown">
+            <button class="profile-button" (click)="toggleDropdown()">
+              <i class="icon user-icon"></i>
+              <span>Company Profile</span>
+            </button>
+            <div class="dropdown-menu" [class.show]="showDropdown">
+              <a class="dropdown-item">Thông tin công ty</a>
+              <a class="dropdown-item">Cài đặt</a>
+              <a class="dropdown-item" (click)="logout()">Đăng xuất</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>

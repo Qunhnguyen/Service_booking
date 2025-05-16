@@ -1,0 +1,228 @@
+// Variables
+$primary-color: #1a237e;
+$secondary-color: #2196f3;
+$accent-color: #9B4DFF;
+$container-bg: rgba(255, 255, 255, 0.95);
+$text-primary: #333;
+$text-secondary: #666;
+$transition-speed: 0.3s;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin glass-effect {
+  background: $container-bg;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+// Main Styles
+.wrapper {
+  @include flex-center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+  padding: 20px;
+}
+
+.container {
+  @include flex-center;
+  width: 100%;
+  max-width: 480px;
+}
+
+.content-box {
+  @include glass-effect;
+  width: 100%;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+// Logo Styles
+.logo-container {
+  position: relative;
+  @include flex-center;
+  margin-bottom: 24px;
+}
+
+.logo {
+  font-size: 3rem;
+  color: $primary-color;
+  z-index: 2;
+}
+
+.logo-ring {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 3px solid rgba(26, 35, 126, 0.2);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+// Header Styles
+.header {
+  margin-bottom: 32px;
+  
+  h1 {
+    color: $primary-color;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  
+  p {
+    color: $text-secondary;
+    font-size: 1.1rem;
+  }
+}
+
+// Button Styles
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: none;
+  border-radius: 8px;
+  transition: all $transition-speed ease;
+  overflow: hidden;
+  height: auto;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .anticon {
+    font-size: 24px;
+    margin-right: 16px;
+    color: white;
+  }
+}
+
+.btn-content {
+  text-align: left;
+  flex: 1;
+  
+  .btn-title {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: white;
+  }
+  
+  .btn-desc {
+    display: block;
+    font-size: 0.9rem;
+    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.company-btn {
+  background: linear-gradient(135deg, $secondary-color 0%, $primary-color 100%);
+  
+  &:hover {
+    background: linear-gradient(135deg, darken($secondary-color, 5%) 0%, darken($primary-color, 5%) 100%);
+  }
+}
+
+.client-btn {
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  
+  &:hover {
+    background: linear-gradient(135deg, darken(#4CAF50, 5%) 0%, darken(#2E7D32, 5%) 100%);
+  }
+}
+
+// Footer Styles
+.footer {
+  margin-top: 32px;
+  color: $text-secondary;
+  
+  a {
+    color: $accent-color;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color $transition-speed ease;
+    
+    &:hover {
+      color: darken($accent-color, 10%);
+      text-decoration: underline;
+    }
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+}
+
+// Responsive Styles
+@media (max-width: 768px) {
+  .content-box {
+    padding: 30px;
+  }
+  
+  .header {
+    h1 {
+      font-size: 1.8rem;
+    }
+    
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .content-box {
+    padding: 24px;
+  }
+  
+  .header {
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .btn {
+    padding: 16px;
+    
+    .anticon {
+      font-size: 20px;
+    }
+    
+    .btn-content {
+      .btn-title {
+        font-size: 1rem;
+      }
+      
+      .btn-desc {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

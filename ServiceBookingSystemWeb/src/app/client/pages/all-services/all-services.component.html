@@ -1,0 +1,141 @@
+<div class="services-wrapper">
+  <!-- Header Section -->
+  <section class="header-section">
+    <h1 class="header-title">Khám phá dịch vụ</h1>
+    <p class="header-subtitle">Tìm kiếm và lựa chọn dịch vụ phù hợp với nhu cầu của bạn</p>
+  </section>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    <nz-spin nzTip="Đang tải..."></nz-spin>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <section class="search-filter-section" *ngIf="!isLoading">
+    <div class="search-container">
+      <div class="search-box">
+        <i nz-icon nzType="search"></i>
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          placeholder="Tìm kiếm dịch vụ..."
+          (keyup.enter)="onSearch()"
+        />
+        <button class="search-button" (click)="onSearch()">
+          <i nz-icon nzType="search"></i>
+          Tìm kiếm
+        </button>
+      </div>
+    </div>
+
+    <div class="filter-container">
+      <div class="filter-group">
+        <button class="filter-button" (click)="resetFilters()">
+          <i nz-icon nzType="reload"></i>
+          Tất cả
+        </button>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Sắp xếp:</span>
+        <button 
+          class="filter-button" 
+          (click)="sortByPrice('asc')" 
+          [class.active]="sortType === 'asc'"
+        >
+          <i nz-icon nzType="arrow-up"></i>
+          Giá tăng dần
+        </button>
+        <button 
+          class="filter-button" 
+          (click)="sortByPrice('desc')" 
+          [class.active]="sortType === 'desc'"
+        >
+          <i nz-icon nzType="arrow-down"></i>
+          Giá giảm dần
+        </button>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Khoảng giá:</span>
+        <button 
+          class="filter-button" 
+          (click)="filterByPrice('<100')" 
+          [class.active]="priceRange === '<100'"
+        >
+          <i nz-icon nzType="dollar"></i>
+          Dưới 100k
+        </button>
+        <button 
+          class="filter-button" 
+          (click)="filterByPrice('100-300')" 
+          [class.active]="priceRange === '100-300'"
+        >
+          <i nz-icon nzType="dollar"></i>
+          100k - 300k
+        </button>
+        <button 
+          class="filter-button" 
+          (click)="filterByPrice('>300')" 
+          [class.active]="priceRange === '>300'"
+        >
+          <i nz-icon nzType="dollar"></i>
+          Trên 300k
+        </button>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Đánh giá:</span>
+        <button 
+          class="filter-button" 
+          (click)="filterByRating(4)" 
+          [class.active]="minRating === 4"
+        >
+          <i nz-icon nzType="star"></i>
+          Từ 4 sao trở lên
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid Section -->
+  <section class="services-grid" *ngIf="!isLoading">
+    <div class="service-card" *ngFor="let ad of ads">
+      <div class="service-image">
+        <img [src]="updateImg(ad.returnedImg)" [alt]="ad.serviceName">
+        <div class="service-overlay">
+          <span class="company-name">{{ ad.companyName }}</span>
+        </div>
+      </div>
+      <div class="service-content">
+        <h3 class="service-title">{{ ad.serviceName }}</h3>
+        <div class="service-rating">
+          <nz-rate [ngModel]="ad.rating" [nzDisabled]="true"></nz-rate>
+          <span class="rating-value">{{ ad.rating | number:'1.1-1' }}</span>
+        </div>
+        <div class="service-price">
+          <i nz-icon nzType="dollar"></i>
+          <span>{{ ad.price | number }} VND</span>
+        </div>
+        <div class="service-footer">
+          <button 
+            nz-button 
+            nzType="primary" 
+            [routerLink]="'/client/ad/' + ad.id"
+            class="view-button"
+          >
+            <i nz-icon nzType="eye"></i>
+            Xem chi tiết
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- No Results Section -->
+  <section class="no-results" *ngIf="!isLoading && ads.length === 0">
+    <i nz-icon nzType="search" class="no-results-icon"></i>
+    <h3>Không tìm thấy dịch vụ phù hợp</h3>
+    <p>Vui lòng thử lại với từ khóa hoặc bộ lọc khác</p>
+  </section>
+</div>

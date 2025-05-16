@@ -1,0 +1,156 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Quản Lý Đặt Lịch</h1>
+    <div class="header-stats">
+      <mat-card class="stat-card">
+        <div class="stat-content">
+          <mat-icon class="stat-icon">calendar_today</mat-icon>
+          <div class="stat-info">
+            <h3>Tổng số đặt lịch</h3>
+            <p>{{ bookings.length }}</p>
+          </div>  
+        </div>
+      </mat-card>
+      <mat-card class="stat-card">
+        <div class="stat-content">
+          <mat-icon class="stat-icon">check_circle</mat-icon>
+          <div class="stat-info">
+            <h3>Đã xác nhận</h3>
+            <p>{{ getConfirmedBookings() }}</p>
+          </div>
+        </div>
+      </mat-card>
+      <mat-card class="stat-card">
+        <div class="stat-content">
+          <mat-icon class="stat-icon">schedule</mat-icon>
+          <div class="stat-info">
+            <h3>Đang chờ</h3>
+            <p>{{ getPendingBookings() }}</p>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="dashboard-content">
+    <mat-card class="booking-list-card">
+      <div class="card-header">
+        <h2>Danh Sách Đặt Lịch</h2>
+        <div class="search-box large-search">
+          <mat-form-field appearance="outline">
+            <mat-label>Tìm kiếm đặt lịch...</mat-label>
+            <input 
+              matInput 
+              [(ngModel)]="searchText"
+              (ngModelChange)="onSearch($event)"
+              [disabled]="isLoading"
+            />
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="loading-container" *ngIf="isLoading">
+        <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+        <p>Đang tải dữ liệu...</p>
+      </div>
+
+      <div class="no-bookings" *ngIf="!isLoading && dataSource.data.length === 0">
+        <mat-card>
+          <mat-card-content>
+            <p class="empty-message">
+              {{ searchText ? 'Không tìm thấy kết quả phù hợp' : 'Chưa có đặt lịch nào' }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="booking-list" *ngIf="!isLoading && dataSource.data.length > 0">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table responsive-table">
+          <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef class="wide-col">Tên khách hàng</th>
+            <td mat-cell *matCellDef="let booking" class="wide-col">{{ booking.userName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="serviceName">
+            <th mat-header-cell *matHeaderCellDef class="wide-col">Dịch vụ</th>
+            <td mat-cell *matCellDef="let booking" class="wide-col">{{ booking.serviceName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="bookDate">
+            <th mat-header-cell *matHeaderCellDef>Ngày đặt</th>
+            <td mat-cell *matCellDef="let booking">{{ booking.bookDate | date: 'dd/MM/yyyy' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="reservationStatus">
+            <th mat-header-cell *matHeaderCellDef>Trạng thái</th>
+            <td mat-cell *matCellDef="let booking">
+              <mat-chip [color]="getStatusColor(booking.reservationStatus)" selected class="status-chip">
+                {{ booking.reservationStatus }}
+              </mat-chip>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="message">
+            <th mat-header-cell *matHeaderCellDef class="message-col">Địa chỉ</th>
+            <td mat-cell *matCellDef="let booking" class="message-col">
+              <mat-tooltip [matTooltip]="booking.message">
+                <div class="message-content">{{ booking.message }}</div>
+              </mat-tooltip>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Thao tác</th>
+            <td mat-cell *matCellDef="let booking">
+              <div class="action-buttons-container">
+                <button 
+                  mat-raised-button
+                  color="primary" 
+                  (click)="confirmStatusChange(booking.id, 'Approve')"
+                  [disabled]="isLoading || booking.reservationStatus === 'APPROVED'"
+                  class="action-button">
+                  <mat-icon>check</mat-icon> Xác nhận
+                </button>
+                <button 
+                  mat-raised-button
+                  color="accent"
+                  (click)="confirmStatusChange(booking.id, 'Pending')"
+                  [disabled]="isLoading || booking.reservationStatus === 'PENDING'"
+                  class="action-button">
+                  <mat-icon>schedule</mat-icon> Chờ
+                </button>
+                <button 
+                  mat-raised-button
+                  color="warn" 
+                  (click)="confirmStatusChange(booking.id, 'Reject')"
+                  [disabled]="isLoading || booking.reservationStatus === 'REJECTED'"
+                  class="action-button">
+                  <mat-icon>close</mat-icon> Từ chối
+                </button>
+                <button 
+                  mat-raised-button
+                  color="warn" 
+                  (click)="confirmDelete(booking.id)"
+                  [disabled]="isLoading"
+                  class="action-button">
+                  <mat-icon>delete</mat-icon> Xóa
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['userName', 'serviceName', 'bookDate', 'reservationStatus', 'message', 'actions']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['userName', 'serviceName', 'bookDate', 'reservationStatus', 'message', 'actions'];"></tr>
+        </table>
+
+        <mat-paginator 
+          [pageSize]="10"
+          [pageSizeOptions]="[5, 10, 25, 50]"
+          showFirstLastButtons
+          aria-label="Select page of bookings">
+        </mat-paginator>
+      </div>
+    </mat-card>
+  </div>
+</div>

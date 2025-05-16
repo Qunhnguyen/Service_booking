@@ -1,0 +1,103 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="content-box">
+      <!-- Logo Section -->
+      <div class="logo-container">
+        <span class="logo">👤</span>
+        <div class="logo-ring"></div>
+      </div>
+
+      <!-- Header Section -->
+      <div class="header">
+        <h1>Đăng Ký Tài Khoản</h1>
+        <p>Điền thông tin của bạn để tạo tài khoản</p>
+      </div>
+
+      <!-- Form Section -->
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="signup-form">
+        <!-- Email Field -->
+        <nz-form-item>
+          <nz-form-control nzHasFeedback [nzErrorTip]="emailError">
+            <nz-input-group nzPrefixIcon="mail">
+              <input nz-input placeholder="Email" formControlName="email" id="email">
+            </nz-input-group>
+            <ng-template #emailError let-control>
+              <ng-container *ngIf="control.hasError('email')">Email không hợp lệ</ng-container>
+              <ng-container *ngIf="control.hasError('required')">Vui lòng nhập email</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Password Field -->
+        <nz-form-item>
+          <nz-form-control nzHasFeedback [nzErrorTip]="passwordError">
+            <nz-input-group nzPrefixIcon="lock">
+              <input nz-input type="password" placeholder="Mật khẩu" formControlName="password" id="password">
+            </nz-input-group>
+            <ng-template #passwordError let-control>
+              <ng-container *ngIf="control.hasError('required')">Vui lòng nhập mật khẩu</ng-container>
+              <ng-container *ngIf="control.hasError('minlength')">Mật khẩu phải có ít nhất 6 ký tự</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Confirm Password Field -->
+        <nz-form-item>
+          <nz-form-control nzHasFeedback [nzErrorTip]="confirmError">
+            <nz-input-group nzPrefixIcon="lock">
+              <input nz-input type="password" placeholder="Xác nhận mật khẩu" formControlName="checkPassword">
+            </nz-input-group>
+            <ng-template #confirmError let-control>
+              <ng-container *ngIf="control.hasError('required')">Vui lòng xác nhận mật khẩu</ng-container>
+              <ng-container *ngIf="control.hasError('confirm')">Mật khẩu không khớp</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Name Fields -->
+        <div class="name-group">
+          <nz-form-item>
+            <nz-form-control nzHasFeedback nzErrorTip="Vui lòng nhập tên">
+              <nz-input-group nzPrefixIcon="user">
+                <input nz-input placeholder="Tên" formControlName="name">
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control nzHasFeedback nzErrorTip="Vui lòng nhập họ">
+              <nz-input-group nzPrefixIcon="user">
+                <input nz-input placeholder="Họ" formControlName="lastname">
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <!-- Phone Field -->
+        <nz-form-item>
+          <nz-form-control nzHasFeedback [nzErrorTip]="phoneError">
+            <nz-input-group nzPrefixIcon="phone">
+              <input nz-input placeholder="Số điện thoại" formControlName="phone">
+            </nz-input-group>
+            <ng-template #phoneError let-control>
+              <ng-container *ngIf="control.hasError('required')">Vui lòng nhập số điện thoại</ng-container>
+              <ng-container *ngIf="control.hasError('pattern')">Số điện thoại không hợp lệ</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Submit Button -->
+        <button nz-button nzType="primary" class="submit-btn" [disabled]="!validateForm.valid">
+          <span nz-icon nzType="user-add" nzTheme="outline"></span>
+          Đăng Ký Ngay
+        </button>
+      </form>
+
+      <!-- Footer Section -->
+      <div class="footer">
+        <p>Đã có tài khoản? <a routerLink="/login">Đăng nhập ngay</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+  

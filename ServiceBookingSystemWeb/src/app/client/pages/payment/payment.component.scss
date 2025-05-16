@@ -1,0 +1,224 @@
+.wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+  padding: 3rem 0;
+}
+
+.payment-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.payment-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+}
+
+.payment-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #f0f0f0;
+
+  .payment-title {
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .payment-subtitle {
+    color: #7f8c8d;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+}
+
+.service-details {
+  .section-title {
+    font-size: 20px;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+
+    .section-icon {
+      color: #3498db;
+      font-size: 24px;
+    }
+  }
+}
+
+.service-info {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  border: 1px solid #e2e8f0;
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+
+      .label {
+        color: #64748b;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .value {
+        color: #1e293b;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      &.total-price {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 2px dashed #e8e8e8;
+
+        .label {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #1a237e;
+        }
+
+        .value.highlight {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #2196f3;
+        }
+      }
+    }
+  }
+}
+
+.payment-methods {
+  margin-bottom: 3rem;
+
+  .methods-grid {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+
+    .method-card {
+      background: #ebf8ff;
+      border: 2px solid #3498db;
+      border-radius: 12px;
+      padding: 0;
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+      .method-logo {
+        width: 90%;
+        height: 90%;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(52, 152, 219, 0.08);
+      }
+    }
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: flex-end;
+  margin-top: 3rem;
+
+  button {
+    min-width: 180px;
+    height: 52px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    &.back-button {
+      background: #f1f5f9;
+      border-color: #e2e8f0;
+      color: #64748b;
+
+      &:hover {
+        background: #e2e8f0;
+        border-color: #cbd5e1;
+        color: #475569;
+      }
+    }
+
+    &.pay-button {
+      background: #3498db;
+      border-color: #3498db;
+      color: #ffffff;
+
+      &:hover {
+        background: #2980b9;
+        border-color: #2980b9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+      }
+
+      &:disabled {
+        background: #e2e8f0;
+        border-color: #cbd5e1;
+        color: #94a3b8;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 1.5rem 0;
+  }
+
+  .payment-container {
+    padding: 0 1rem;
+  }
+
+  .payment-card {
+    padding: 1.5rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .methods-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

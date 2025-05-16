@@ -1,0 +1,28 @@
+<div class="chatbot-container" [class.minimized]="isMinimized">
+  <div class="chat-header">
+    <span>AI Chatbot</span>
+    <button class="minimize-btn" (click)="toggleMinimize()">
+      <span nz-icon [nzType]="isMinimized ? 'fullscreen' : 'fullscreen-exit'" nzTheme="outline"></span>
+    </button>
+  </div>
+  <div class="chat-content" [class.hidden]="isMinimized">
+    <div class="chat-messages" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+      <div *ngFor="let msg of messages" [ngClass]="msg.sender">
+        <strong *ngIf="msg.sender === 'user'">Bạn:</strong>
+        <strong *ngIf="msg.sender === 'bot'">Bot:</strong>
+        {{ msg.text }}
+      </div>
+    </div>
+    <div class="chat-input">
+      <input
+        type="text"
+        [(ngModel)]="userInput"
+        placeholder="Nhập tin nhắn..."
+        (keyup.enter)="sendMessage()"
+      />
+      <button (click)="sendMessage()">
+        <span nz-icon nzType="send" nzTheme="outline"></span>
+      </button>
+    </div>
+  </div>
+</div>

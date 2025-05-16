@@ -1,0 +1,78 @@
+<section class="wrapper">
+  <div class="payment-container">
+    <div class="payment-card">
+      <!-- Header Section -->
+      <div class="payment-header">
+        <h1 class="payment-title">Thanh toán dịch vụ</h1>
+        <p class="payment-subtitle">Vui lòng kiểm tra thông tin và hoàn tất thanh toán</p>
+      </div>
+
+      <!-- Service Details Section -->
+      <div class="service-details">
+        <div class="service-info">
+          <h2 class="section-title">
+            <i nz-icon nzType="shopping" class="section-icon"></i>
+            Thông tin dịch vụ
+          </h2>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Tên dịch vụ:</span>
+              <span class="value">{{ ad?.serviceName }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Giá dịch vụ/ngày:</span>
+              <span class="value">{{ ad?.price | number }} VND</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Ngày bắt đầu:</span>
+              <span class="value">{{ bookingData?.startDate | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Ngày kết thúc:</span>
+              <span class="value">{{ bookingData?.endDate | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Địa chỉ:</span>
+              <span class="value">{{ bookingData?.message }}</span>
+            </div>
+            <div class="info-item total-price">
+              <span class="label">Tổng tiền:</span>
+              <span class="value highlight">{{ bookingData?.totalPrice | number }} VND</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Method Section -->
+        <div class="payment-methods">
+          <h2 class="section-title">
+            <i nz-icon nzType="credit-card" class="section-icon"></i>
+            Phương thức thanh toán
+          </h2>
+          <div class="methods-grid">
+            <div class="method-card active">
+              <img src="assets/vnpay.png" alt="VNPay" class="method-logo">
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button nz-button nzType="default" nzSize="large" class="back-button" (click)="goBack()">
+            <i nz-icon nzType="arrow-left"></i>
+            Quay lại
+          </button>
+          <button 
+            nz-button 
+            nzType="primary" 
+            nzSize="large" 
+            class="pay-button"
+            (click)="payVNPay()"
+          >
+            <i nz-icon nzType="check-circle"></i>
+            Thanh toán qua VNPay
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

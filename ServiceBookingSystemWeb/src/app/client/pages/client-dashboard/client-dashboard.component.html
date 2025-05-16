@@ -1,0 +1,127 @@
+<div class="dashboard-wrapper">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title"></h1>
+        <p class="hero-subtitle">Chúng tôi luôn sẵn sàng hỗ trợ và đem đến cho bạn những trải nghiệm tuyệt vời, đáp ứng tối đa nhu cầu của khách hàng với sự tận tâm và uy tín.</p>
+        <div class="hero-buttons">
+          <button nz-button nzType="primary" nzSize="large" routerLink="/client/services">
+            <i nz-icon nzType="appstore"></i> Khám phá dịch vụ
+          </button>
+          <button nz-button nzType="default" nzSize="large" routerLink="/client/bookings">
+            <i nz-icon nzType="calendar"></i> Đặt lịch ngay
+          </button>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="image-container">
+          <img src="assets/hero-image.png" alt="Hero Image" class="hero-img">
+          <div class="image-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Services Section -->
+  <section class="featured-services">
+    <div class="section-header">
+      <h2 class="section-title">Dịch vụ nổi bật</h2>
+      <p class="section-subtitle">Khám phá các dịch vụ chất lượng của chúng tôi</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card" *ngFor="let ad of latestAds" [routerLink]="'/client/ad/' + ad.id">
+        <div class="service-image">
+          <img [src]="updateImg(ad.returnedImg)" [alt]="ad.serviceName">
+          <div class="service-overlay">
+            <span class="company-name">{{ ad.companyName }}</span>
+          </div>
+        </div>
+        <div class="service-content">
+          <h3 class="service-title">{{ ad.serviceName }}</h3>
+          <p class="service-price">{{ ad.price | number }} VND</p>
+          <div class="service-footer">
+            <button nz-button nzType="primary" class="view-button">
+              <i nz-icon nzType="eye"></i> Xem chi tiết
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="view-more">
+      <button nz-button nzType="primary" nzSize="large" routerLink="/client/services">
+        <i nz-icon nzType="plus"></i> Xem thêm dịch vụ
+      </button>
+    </div>
+  </section>
+
+  <!-- Upcoming Services Section -->
+  <section class="upcoming-services">
+    <div class="section-header">
+      <h2 class="section-title">Dịch vụ sắp có</h2>
+      <p class="section-subtitle">Các dịch vụ mới sắp được ra mắt</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card" *ngFor="let ad of latestAds" [routerLink]="'/client/ad/' + ad.id">
+        <div class="service-image">
+          <img [src]="updateImg(ad.returnedImg)" [alt]="ad.serviceName">
+          <div class="service-overlay">
+            <span class="company-name">{{ ad.companyName }}</span>
+          </div>
+        </div>
+        <div class="service-content">
+          <h3 class="service-title">{{ ad.serviceName }}</h3>
+          <p class="service-price">{{ ad.price | number }} VND</p>
+          <div class="service-footer">
+            <button nz-button nzType="primary" class="view-button">
+              <i nz-icon nzType="eye"></i> Xem chi tiết
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="view-more">
+      <button nz-button nzType="primary" nzSize="large" routerLink="/client/services">
+        <i nz-icon nzType="plus"></i> Xem thêm dịch vụ
+      </button>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <div class="contact-container">
+      <div class="contact-content">
+        <h2 class="contact-title">Liên hệ với chúng tôi</h2>
+        <p class="contact-subtitle">Nếu bạn có bất kỳ câu hỏi nào, xin đừng ngần ngại liên hệ với chúng tôi. Chúng tôi rất mong được nghe từ bạn!</p>
+
+        <form nz-form (ngSubmit)="submitContact()" class="contact-form">
+          <div class="form-group">
+            <label for="name">Tên của bạn</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Lời nhắn</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+          </div>
+
+          <button type="submit" class="submit-button">
+            <i nz-icon nzType="send"></i> Gửi tin nhắn
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+

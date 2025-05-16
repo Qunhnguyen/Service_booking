@@ -1,0 +1,174 @@
+<section class="bookings-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h3>Menu</h3>
+    </div>
+
+    <!-- Main Menu -->
+    <nav class="sidebar-menu">
+      <a routerLink="/client/dashboard" class="menu-item">
+        <i nz-icon nzType="home"></i>
+        <span>Trang chủ</span>
+      </a>
+      <a routerLink="/client/services" class="menu-item">
+        <i nz-icon nzType="appstore"></i>
+        <span>Khám phá dịch vụ</span>
+      </a>
+      <a routerLink="/client/bookings" class="menu-item active">
+        <i nz-icon nzType="calendar"></i>
+        <span>Lịch đặt của tôi</span>
+      </a>
+      
+    </nav>
+
+    <!-- Statistics -->
+    <div class="sidebar-stats">
+      <h4>Thống kê</h4>
+      <div class="stat-item">
+        <i nz-icon nzType="clock-circle"></i>
+        <div class="stat-info">
+          <span class="stat-value">{{ pendingBookings }}</span>
+          <span class="stat-label">Đang chờ xử lý</span>
+        </div>
+      </div>
+      <div class="stat-item">
+        <i nz-icon nzType="check-circle"></i>
+        <div class="stat-info">
+          <span class="stat-value">{{ confirmedBookings }}</span>
+          <span class="stat-label">Đã xác nhận</span>
+        </div>
+      </div>
+      
+      <div class="stat-item">
+        <i nz-icon nzType="star"></i>
+        <div class="stat-info">
+          <span class="stat-value">{{ totalReviews }}</span>
+          <span class="stat-label">Đánh giá đã viết</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Filters -->
+    <div class="sidebar-filters">
+      <h4>Lọc nhanh</h4>
+      <div class="filter-group">
+        <span class="filter-label">Trạng thái:</span>
+        <div class="filter-options">
+          <button class="filter-button" [class.active]="statusFilter === 'all'" (click)="filterByStatus('all')">
+            Tất cả
+          </button>
+          <button class="filter-button" [class.active]="statusFilter === 'pending'" (click)="filterByStatus('pending')">
+            Đang chờ
+          </button>
+          <button class="filter-button" [class.active]="statusFilter === 'confirmed'" (click)="filterByStatus('confirmed')">
+            Đã xác nhận
+          </button>
+          
+        </div>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Thời gian:</span>
+        <div class="filter-options">
+          <button class="filter-button" [class.active]="timeFilter === 'all'" (click)="filterByTime('all')">
+            Tất cả
+          </button>
+          <button class="filter-button" [class.active]="timeFilter === 'week'" (click)="filterByTime('week')">
+            Tuần này
+          </button>
+          <button class="filter-button" [class.active]="timeFilter === 'month'" (click)="filterByTime('month')">
+            Tháng này
+          </button>
+          <button class="filter-button" [class.active]="timeFilter === 'quarter'" (click)="filterByTime('quarter')">
+            3 tháng gần đây
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Support -->
+    <div class="sidebar-support">
+      <h4>Hỗ trợ</h4>
+      <a href="#" class="support-link">
+        <i nz-icon nzType="question-circle"></i>
+        <span>Trung tâm trợ giúp</span>
+      </a>
+      <a href="#" class="support-link">
+        <i nz-icon nzType="customer-service"></i>
+        <span>Liên hệ hỗ trợ</span>
+      </a>
+      <a href="#" class="support-link">
+        <i nz-icon nzType="info-circle"></i>
+        <span>FAQ</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Header Section -->
+    <section class="header-section">
+      <h1 class="header-title">Lịch đặt của bạn</h1>
+      <p class="header-subtitle">Quản lý và theo dõi các dịch vụ bạn đã đặt</p>
+    </section>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-spinner">
+      <nz-spin nzTip="Đang tải..."></nz-spin>
+    </div>
+
+    <!-- Bookings Grid -->
+    <section class="bookings-section" *ngIf="!isLoading">
+      <div *ngIf="filteredBookings.length > 0; else noBookings" class="booking-grid">
+        <div *ngFor="let booking of filteredBookings" class="booking-card">
+          <div class="booking-header">
+            <h3 class="booking-service">{{ booking.serviceName }}</h3>
+            <span class="booking-status" [ngClass]="booking.reservationStatus.toLowerCase()">
+              {{ booking.reservationStatus }}
+            </span>
+          </div>
+          
+          <div class="booking-details">
+            <div class="detail-item">
+              <i nz-icon nzType="calendar"></i>
+              <span>Ngày đặt: {{ booking.bookDate | date: 'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="detail-item">
+              <i nz-icon nzType="clock-circle"></i>
+              <span>Thời gian: {{ booking.bookTime}}</span>
+            </div>
+            
+          </div>
+
+          <div class="booking-actions">
+            <div *ngIf="booking.reviewStatus === 'FALSE'" class="action-group">
+              <button class="review-button" routerLink="/client/review/{{ booking.id }}">
+                <i nz-icon nzType="star"></i>
+                Đánh giá
+              </button>
+            </div>
+            <div class="action-group">
+              <button class="delete-button" (click)="deleteBooking(booking.id)">
+                <i nz-icon nzType="delete"></i>
+                Hủy đặt
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Bookings Message -->
+      <ng-template #noBookings>
+        <div class="no-bookings-message">
+          <i nz-icon nzType="calendar" class="no-bookings-icon"></i>
+          <h2>Bạn chưa có lịch đặt nào</h2>
+          <p>Hãy khám phá và đặt ngay các dịch vụ chất lượng của chúng tôi!</p>
+          <button nz-button nzType="primary" routerLink="/client/services">
+            <i nz-icon nzType="appstore"></i>
+            Khám phá dịch vụ
+          </button>
+        </div>
+      </ng-template>
+    </section>
+  </main>
+</section>

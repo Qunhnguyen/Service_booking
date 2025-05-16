@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Tùy chỉnh giá dịch vụ</h2>
+<mat-dialog-content>
+  <form [formGroup]="priceForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Giá dịch vụ (VNĐ)</mat-label>
+      <input matInput type="number" formControlName="price" min="0">
+      <mat-error *ngIf="priceForm.get('price')?.hasError('required')">
+        Vui lòng nhập giá dịch vụ
+      </mat-error>
+      <mat-error *ngIf="priceForm.get('price')?.hasError('min')">
+        Giá dịch vụ phải lớn hơn 0
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Hủy</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!priceForm.valid">
+    Xác nhận
+  </button>
+</mat-dialog-actions> 

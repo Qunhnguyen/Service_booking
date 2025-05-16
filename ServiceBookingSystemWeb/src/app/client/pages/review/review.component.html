@@ -1,0 +1,91 @@
+<!-- Review Container -->
+<div class="review-container">
+  <div class="review-card">
+    <div class="review-header">
+      <h1 class="review-title">Đánh giá dịch vụ</h1>
+      <p class="review-subtitle">Chia sẻ trải nghiệm của bạn về dịch vụ</p>
+    </div>
+
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="giveReview()" class="review-form">
+      <!-- Rating Section -->
+      <div class="rating-section">
+        <label class="rating-label">
+          <i nz-icon nzType="star" class="star-icon"></i>
+          Đánh giá của bạn
+        </label>
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="ratingErrorTpl">
+            <nz-rate
+              formControlName="rating"
+              [nzAllowHalf]="true"
+              class="rating-stars"
+            ></nz-rate>
+          </nz-form-control>
+        </nz-form-item>
+        <div class="rating-description" *ngIf="validateForm.get('rating')?.value">
+          {{ getRatingDescription(validateForm.get('rating')?.value) }}
+        </div>
+      </div>
+
+      <!-- Review Content Section -->
+      <div class="review-content-section">
+        <label class="review-content-label">
+          <i nz-icon nzType="edit" class="edit-icon"></i>
+          Nội dung đánh giá
+        </label>
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="reviewErrorTpl">
+            <textarea
+              nz-input
+              formControlName="review"
+              rows="6"
+              placeholder="Chia sẻ chi tiết về trải nghiệm của bạn với dịch vụ này..."
+              class="review-textarea"
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <div class="character-count" *ngIf="validateForm.get('review')?.value">
+          {{ validateForm.get('review')?.value.length }}/500 ký tự
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="submit-section">
+        <button
+          nz-button
+          nzType="primary"
+          nzSize="large"
+          [disabled]="validateForm.invalid"
+          type="submit"
+          class="submit-button"
+        >
+          <i nz-icon nzType="check-circle"></i>
+          Gửi đánh giá
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Error Templates -->
+<ng-template #ratingErrorTpl let-control>
+  <ng-container *ngIf="control.hasError('required')">
+    Vui lòng chọn số sao đánh giá
+  </ng-container>
+  <ng-container *ngIf="control.hasError('min')">
+    Vui lòng chọn ít nhất 1 sao
+  </ng-container>
+</ng-template>
+
+<ng-template #reviewErrorTpl let-control>
+  <ng-container *ngIf="control.hasError('required')">
+    Vui lòng nhập nội dung đánh giá
+  </ng-container>
+  <ng-container *ngIf="control.hasError('minlength')">
+    Nội dung đánh giá phải có ít nhất 10 ký tự
+  </ng-container>
+  <ng-container *ngIf="control.hasError('maxlength')">
+    Nội dung đánh giá không được vượt quá 500 ký tự
+  </ng-container>
+</ng-template>
+  

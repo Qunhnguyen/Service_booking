@@ -1,0 +1,101 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="content-box">
+      <!-- Logo Section -->
+      <div class="logo-container">
+        <span class="logo">🏢</span>
+        <div class="logo-ring"></div>
+      </div>
+
+      <!-- Header Section -->
+      <div class="header">
+        <h1>Đăng Ký Doanh Nghiệp</h1>
+        <p>Điền thông tin công ty của bạn để bắt đầu cung cấp dịch vụ</p>
+      </div>
+
+      <!-- Form Section -->
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="signup-form">
+        <!-- Email Field -->
+        <nz-form-item>
+          <nz-form-control nzHasFeedback [nzErrorTip]="emailError">
+            <nz-input-group nzPrefixIcon="mail">
+              <input nz-input placeholder="Email doanh nghiệp" formControlName="email" id="email">
+            </nz-input-group>
+            <ng-template #emailError let-control>
+              <ng-container *ngIf="control.hasError('email')">Email không hợp lệ</ng-container>
+              <ng-container *ngIf="control.hasError('required')">Vui lòng nhập email</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Password Fields -->
+        <div class="password-group">
+          <nz-form-item>
+            <nz-form-control nzHasFeedback [nzErrorTip]="passwordError">
+              <nz-input-group nzPrefixIcon="lock">
+                <input nz-input type="password" placeholder="Mật khẩu" formControlName="password" id="password">
+              </nz-input-group>
+              <ng-template #passwordError let-control>
+                <ng-container *ngIf="control.hasError('required')">Vui lòng nhập mật khẩu</ng-container>
+                <ng-container *ngIf="control.hasError('minlength')">Mật khẩu phải có ít nhất 6 ký tự</ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control nzHasFeedback [nzErrorTip]="confirmError">
+              <nz-input-group nzPrefixIcon="lock">
+                <input nz-input type="password" placeholder="Xác nhận mật khẩu" formControlName="checkPassword">
+              </nz-input-group>
+              <ng-template #confirmError let-control>
+                <ng-container *ngIf="control.hasError('required')">Vui lòng xác nhận mật khẩu</ng-container>
+                <ng-container *ngIf="control.hasError('confirm')">Mật khẩu không khớp</ng-container>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <!-- Company Info -->
+        <nz-form-item>
+          <nz-form-control nzHasFeedback nzErrorTip="Vui lòng nhập tên công ty">
+            <nz-input-group nzPrefixIcon="bank">
+              <input nz-input placeholder="Tên công ty" formControlName="name">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzHasFeedback nzErrorTip="Vui lòng nhập địa chỉ">
+            <nz-input-group nzPrefixIcon="environment">
+              <input nz-input placeholder="Địa chỉ công ty" formControlName="address">
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzHasFeedback [nzErrorTip]="phoneError">
+            <nz-input-group nzPrefixIcon="phone">
+              <input nz-input placeholder="Số điện thoại liên hệ" formControlName="phone">
+            </nz-input-group>
+            <ng-template #phoneError let-control>
+              <ng-container *ngIf="control.hasError('required')">Vui lòng nhập số điện thoại</ng-container>
+              <ng-container *ngIf="control.hasError('pattern')">Số điện thoại không hợp lệ</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Submit Button -->
+        <button nz-button nzType="primary" class="submit-btn" [disabled]="!validateForm.valid">
+          <span nz-icon nzType="shop" nzTheme="outline"></span>
+          Đăng Ký Doanh Nghiệp
+        </button>
+      </form>
+
+      <!-- Footer Section -->
+      <div class="footer">
+        <p>Đã có tài khoản? <a routerLink="/login">Đăng nhập ngay</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+  
